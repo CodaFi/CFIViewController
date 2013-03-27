@@ -1,0 +1,316 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		84EAA05117037EE400E98BFE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EAA05017037EE400E98BFE /* Cocoa.framework */; };
+		84EAA05B17037EE400E98BFE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84EAA05917037EE400E98BFE /* InfoPlist.strings */; };
+		84EAA05D17037EE400E98BFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EAA05C17037EE400E98BFE /* main.m */; };
+		84EAA06117037EE400E98BFE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 84EAA05F17037EE400E98BFE /* Credits.rtf */; };
+		84EAA06417037EE400E98BFE /* CFIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EAA06317037EE400E98BFE /* CFIAppDelegate.m */; };
+		84EAA06717037EE400E98BFE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EAA06517037EE400E98BFE /* MainMenu.xib */; };
+		84EAA0721703A4D600E98BFE /* CFIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EAA0711703A4D600E98BFE /* CFIViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		84EAA04D17037EE400E98BFE /* CFIViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CFIViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84EAA05017037EE400E98BFE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		84EAA05317037EE400E98BFE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		84EAA05417037EE400E98BFE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		84EAA05517037EE400E98BFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		84EAA05817037EE400E98BFE /* CFIViewController-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CFIViewController-Info.plist"; sourceTree = "<group>"; };
+		84EAA05A17037EE400E98BFE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		84EAA05C17037EE400E98BFE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		84EAA05E17037EE400E98BFE /* CFIViewController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CFIViewController-Prefix.pch"; sourceTree = "<group>"; };
+		84EAA06017037EE400E98BFE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		84EAA06217037EE400E98BFE /* CFIAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFIAppDelegate.h; sourceTree = "<group>"; };
+		84EAA06317037EE400E98BFE /* CFIAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CFIAppDelegate.m; sourceTree = "<group>"; };
+		84EAA06617037EE400E98BFE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		84EAA0701703A4D600E98BFE /* CFIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFIViewController.h; sourceTree = SOURCE_ROOT; };
+		84EAA0711703A4D600E98BFE /* CFIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFIViewController.m; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		84EAA04A17037EE400E98BFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EAA05117037EE400E98BFE /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		84EAA04417037EE400E98BFE = {
+			isa = PBXGroup;
+			children = (
+				84EAA05617037EE400E98BFE /* CFIViewController */,
+				84EAA04F17037EE400E98BFE /* Frameworks */,
+				84EAA04E17037EE400E98BFE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		84EAA04E17037EE400E98BFE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84EAA04D17037EE400E98BFE /* CFIViewController.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84EAA04F17037EE400E98BFE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84EAA05017037EE400E98BFE /* Cocoa.framework */,
+				84EAA05217037EE400E98BFE /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84EAA05217037EE400E98BFE /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84EAA05317037EE400E98BFE /* AppKit.framework */,
+				84EAA05417037EE400E98BFE /* CoreData.framework */,
+				84EAA05517037EE400E98BFE /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		84EAA05617037EE400E98BFE /* CFIViewController */ = {
+			isa = PBXGroup;
+			children = (
+				84EAA06217037EE400E98BFE /* CFIAppDelegate.h */,
+				84EAA06317037EE400E98BFE /* CFIAppDelegate.m */,
+				84EAA0701703A4D600E98BFE /* CFIViewController.h */,
+				84EAA0711703A4D600E98BFE /* CFIViewController.m */,
+				84EAA06517037EE400E98BFE /* MainMenu.xib */,
+				84EAA05717037EE400E98BFE /* Supporting Files */,
+			);
+			path = CFIViewController;
+			sourceTree = "<group>";
+		};
+		84EAA05717037EE400E98BFE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84EAA05817037EE400E98BFE /* CFIViewController-Info.plist */,
+				84EAA05917037EE400E98BFE /* InfoPlist.strings */,
+				84EAA05C17037EE400E98BFE /* main.m */,
+				84EAA05E17037EE400E98BFE /* CFIViewController-Prefix.pch */,
+				84EAA05F17037EE400E98BFE /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		84EAA04C17037EE400E98BFE /* CFIViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84EAA06A17037EE400E98BFE /* Build configuration list for PBXNativeTarget "CFIViewController" */;
+			buildPhases = (
+				84EAA04917037EE400E98BFE /* Sources */,
+				84EAA04A17037EE400E98BFE /* Frameworks */,
+				84EAA04B17037EE400E98BFE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CFIViewController;
+			productName = CFIViewController;
+			productReference = 84EAA04D17037EE400E98BFE /* CFIViewController.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		84EAA04517037EE400E98BFE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = CFI;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = CodaFi;
+			};
+			buildConfigurationList = 84EAA04817037EE400E98BFE /* Build configuration list for PBXProject "CFIViewController" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 84EAA04417037EE400E98BFE;
+			productRefGroup = 84EAA04E17037EE400E98BFE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				84EAA04C17037EE400E98BFE /* CFIViewController */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		84EAA04B17037EE400E98BFE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EAA05B17037EE400E98BFE /* InfoPlist.strings in Resources */,
+				84EAA06117037EE400E98BFE /* Credits.rtf in Resources */,
+				84EAA06717037EE400E98BFE /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		84EAA04917037EE400E98BFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EAA05D17037EE400E98BFE /* main.m in Sources */,
+				84EAA06417037EE400E98BFE /* CFIAppDelegate.m in Sources */,
+				84EAA0721703A4D600E98BFE /* CFIViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		84EAA05917037EE400E98BFE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84EAA05A17037EE400E98BFE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		84EAA05F17037EE400E98BFE /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84EAA06017037EE400E98BFE /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		84EAA06517037EE400E98BFE /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84EAA06617037EE400E98BFE /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		84EAA06817037EE400E98BFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		84EAA06917037EE400E98BFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		84EAA06B17037EE400E98BFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CFIViewController/CFIViewController-Prefix.pch";
+				INFOPLIST_FILE = "CFIViewController/CFIViewController-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		84EAA06C17037EE400E98BFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CFIViewController/CFIViewController-Prefix.pch";
+				INFOPLIST_FILE = "CFIViewController/CFIViewController-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		84EAA04817037EE400E98BFE /* Build configuration list for PBXProject "CFIViewController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84EAA06817037EE400E98BFE /* Debug */,
+				84EAA06917037EE400E98BFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84EAA06A17037EE400E98BFE /* Build configuration list for PBXNativeTarget "CFIViewController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84EAA06B17037EE400E98BFE /* Debug */,
+				84EAA06C17037EE400E98BFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 84EAA04517037EE400E98BFE /* Project object */;
+}
