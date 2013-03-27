@@ -104,12 +104,22 @@
 		[NSException raise:NSInternalInconsistencyException format:@"CFIViewController could not instantiate the %@ nib.", self.nibName];
 	}
 	
-	if (self.view != nil) return;
-	[self viewDidLoad];
+	if (self.view != nil) {
+		[self viewDidLoad];
+		return;
+	}
 	
 	[NSException raise:NSInternalInconsistencyException format:@"-[%@ %@]", NSStringFromClass(self.class), NSStringFromSelector(_cmd)];
 }
 
+
+/*!
+ * Possibly the most interesting method in this bucket.  When a NIB is de-frosted, all its objects
+ * are owned by NSCoder, which is why we make them weak.  But if you're the controller, then you 
+ * really don't want NSCoder keeping a reference to what is rightfully yours.  NSViewController
+ * solves this by doing a sneaky shallow-copy of all the objects in the array, then releases them
+ * out from under NSCoder.
+ */
 - (void)_setTopLevelObjects:(NSArray*)newTopLevelObjects {
 	if (_topLevelObjects == newTopLevelObjects) return;
 	
