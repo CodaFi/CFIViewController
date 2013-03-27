@@ -28,7 +28,7 @@
     NSString *_title;
     IBOutlet NSView *view;
     NSArray *_topLevelObjects;
-    NSPointerArray *_editors;
+//    NSPointerArray *_editors;
 //    id _autounbinder;  A reference to the internal NSAutoUnBinder.  No need for it now, as we
 						//Aren't going to touch Core Data or NSDocument with a ten-foot pole
 //    NSString *_designNibBundleIdentifier;

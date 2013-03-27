@@ -39,7 +39,6 @@
 }
 
 - (void)dealloc {
-	[_editors release];
 	[_topLevelObjects release];
 	[view release];
 	[_title release];
