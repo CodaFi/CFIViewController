@@ -8,6 +8,23 @@
 
 #import "CFIViewController.h"
 
+#if __has_feature(objc_arc)
+#define CFI_SAFEBRIDGE(x) (__bridge x)
+#define CFI_SAFEAUTORELEASE(x)
+#define CFI_SAFERELEASE(x)
+#define CFI_SAFERETAIN(x) x
+#define CFI_SAFEDEALLOC
+#define CFI_SAFEATOMICRETVAL(x)
+#else
+#define CFI_SAFEBRIDGE(x) (x)
+#define CFI_SAFEAUTORELEASE(x) [x autorelease]
+#define CFI_SAFERELEASE(x) [x release]
+#define CFI_SAFERETAIN(x) [x retain]
+#define CFI_SAFEDEALLOC [super dealloc]
+#define CFI_SAFEATOMICRETVAL(x) [[x retain]autorelease]
+#endif
+
+
 @implementation CFIViewController
 
 #pragma mark - Lifecycle
@@ -22,7 +39,7 @@
 	self = [super init];
 	
 	_nibName = [nibName copy];
-	_nibBundle = [nibBundleOrNil retain];
+	_nibBundle = CFI_SAFERETAIN(nibBundleOrNil);
 	
 	return self;
 }
@@ -30,23 +47,23 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	self = [super initWithCoder:aDecoder];
 	
-	_nibName = [[aDecoder decodeObjectForKey:@"CFINibName"]retain];
-	_title = [[aDecoder decodeObjectForKey:@"CFITitle"]retain];
-	self->view = [[aDecoder decodeObjectForKey:@"CFINSView"]retain];
-	_nibBundle = [[aDecoder decodeObjectForKey:@"CFINibBundleIdentifier"]retain];
+	_nibName = CFI_SAFERETAIN([aDecoder decodeObjectForKey:@"CFINibName"]);
+	_title = CFI_SAFERETAIN([aDecoder decodeObjectForKey:@"CFITitle"]);
+	self->view = CFI_SAFERETAIN([aDecoder decodeObjectForKey:@"CFINSView"]);
+	_nibBundle = CFI_SAFERETAIN([aDecoder decodeObjectForKey:@"CFINibBundleIdentifier"]);
 	
 	return self;
 }
 
 - (void)dealloc {
-	[_topLevelObjects release];
-	[view release];
-	[_title release];
-	[_representedObject release];
-	[_nibBundle release];
-	[_nibName release];
+	CFI_SAFERELEASE(_topLevelObjects);
+	CFI_SAFERELEASE(self->view);
+	CFI_SAFERELEASE(_title);
+	CFI_SAFERELEASE(_representedObject);
+	CFI_SAFERELEASE(_nibBundle);
+	CFI_SAFERELEASE(_nibName);
 	
-	[super dealloc];
+	CFI_SAFEDEALLOC;
 }
 
 
@@ -58,24 +75,24 @@
 }
 
 - (NSView*)_view {
-	return [[self.view retain]autorelease];
+	return CFI_SAFEATOMICRETVAL(self->view);
 }
 
 - (NSView*)view {
 	if (self->view == nil) {
 		[self loadView];
 	}
-	return [[self->view retain]autorelease];
+	return CFI_SAFEATOMICRETVAL(self->view);
 }
 
 - (void)setRepresentedObject:(id)representedObject {
 	if (_representedObject == representedObject) return;
 	
-	_representedObject = [representedObject retain];
+	_representedObject = CFI_SAFERETAIN(representedObject);
 }
 
 - (id)representedObject {
-	return [[_representedObject retain]autorelease];
+	return CFI_SAFEATOMICRETVAL(_representedObject);
 }
 
 - (void)loadView {
@@ -126,11 +143,11 @@
 }
 
 - (NSString*)nibName {
-	return [[_nibName retain]autorelease];
+	return CFI_SAFEATOMICRETVAL(_nibName);
 }
 
 - (NSBundle *)nibBundle {
-	return [[_nibBundle retain]autorelease];
+	return CFI_SAFEATOMICRETVAL(_nibBundle);
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -161,7 +178,7 @@
 }
 
 - (NSString*)title {
-	return [[_title retain]autorelease];
+	return CFI_SAFEATOMICRETVAL(_title);
 }
 
 @end
