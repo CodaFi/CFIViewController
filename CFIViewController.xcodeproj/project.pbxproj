@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84388EA017065D6B004080CA /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84388E9F17065D6B004080CA /* EmptyView.xib */; };
 		84EAA05117037EE400E98BFE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EAA05017037EE400E98BFE /* Cocoa.framework */; };
 		84EAA05B17037EE400E98BFE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84EAA05917037EE400E98BFE /* InfoPlist.strings */; };
 		84EAA05D17037EE400E98BFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EAA05C17037EE400E98BFE /* main.m */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84388E9F17065D6B004080CA /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		84EAA04D17037EE400E98BFE /* CFIViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CFIViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EAA05017037EE400E98BFE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		84EAA05317037EE400E98BFE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -90,6 +92,7 @@
 				84EAA0701703A4D600E98BFE /* CFIViewController.h */,
 				84EAA0711703A4D600E98BFE /* CFIViewController.m */,
 				84EAA06517037EE400E98BFE /* MainMenu.xib */,
+				84388E9F17065D6B004080CA /* EmptyView.xib */,
 				84EAA05717037EE400E98BFE /* Supporting Files */,
 			);
 			path = CFIViewController;
@@ -162,6 +165,7 @@
 				84EAA05B17037EE400E98BFE /* InfoPlist.strings in Resources */,
 				84EAA06117037EE400E98BFE /* Credits.rtf in Resources */,
 				84EAA06717037EE400E98BFE /* MainMenu.xib in Resources */,
+				84388EA017065D6B004080CA /* EmptyView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

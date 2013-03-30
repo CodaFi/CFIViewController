@@ -8,6 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
+/*!
+ * A primitive rendition of an AutoUnbinder.  It's completely unnecessary in Modern and Garbage 
+ * Collected Cocoa.  If running on an older OS, test for binding leaks.  If binding leaks are
+ * detected, #define CFI_USE_AUTO_UNBINDER to turn on the auto unbinder, which should remove most
+ * of them.
+ */
+
+#ifdef CFI_USE_AUTO_UNBINDER
+
+@interface CFIAutoUnbinder : NSObject {
+	NSMutableDictionary *_observers;
+	id _boundObject;
+	BOOL _retainedBoundObject;
+}
+
+- (id)initWithBindingTarget:(NSObject*)boundObject;
+
+- (void)addBinding:(NSString*)binding fromObject:(NSObject*)object;
+- (void)removeBinding:(NSString*)binding fromObject:(NSObject*)object;
+
+- (void)unbind;
+
+@end
+
+#endif
 
 /*!
  * NSViewController is a strange little class.  A lot of it revolves around hacks to eliminate some
@@ -29,8 +54,9 @@
     IBOutlet NSView *view;
     NSArray *_topLevelObjects;
 //    NSPointerArray *_editors;
-//    id _autounbinder;  A reference to the internal NSAutoUnBinder.  No need for it now, as we
-						//Aren't going to touch Core Data or NSDocument with a ten-foot pole
+#ifdef CFI_USE_AUTO_UNBINDER
+    id _autounbinder;
+#endif
 //    NSString *_designNibBundleIdentifier;
 }
 

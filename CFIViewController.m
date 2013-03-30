@@ -24,6 +24,69 @@
 #define CFI_SAFEATOMICRETVAL(x) [[x retain]autorelease]
 #endif
 
+#ifdef CFI_USE_AUTO_UNBINDER
+
+@implementation CFIAutoUnbinder
+
+- (id)initWithBindingTarget:(NSObject*)boundObject {
+	self = [super init];
+	
+	_boundObject = boundObject;
+	
+	return self;
+}
+
+- (void)addBinding:(NSString*)keyPath fromObject:(NSObject*)observer {
+	NSMutableArray *keypaths = [_observers objectForKey:[NSNumber numberWithUnsignedInteger:observer.hash]];
+	if (!keypaths) {
+		[_observers setObject:[NSMutableArray arrayWithObject:keyPath] forKey:[NSNumber numberWithUnsignedInteger:observer.hash]];
+		return;
+	}
+	[keypaths addObject:keyPath];
+}
+
+- (void)removeBinding:(NSString*)keyPath fromObject:(NSObject*)observer {
+	NSMutableArray *keypaths = [_observers objectForKey:[NSNumber numberWithUnsignedInteger:observer.hash]];
+	if (!keypaths) return;
+	
+	[keypaths removeObject:keyPath];
+}
+
+- (void)unbind {
+	if (!_retainedBoundObject) {
+		_retainedBoundObject = YES;
+		
+		[_boundObject retain];
+		NSEnumerator* myIterator = [_observers objectEnumerator];
+		NSArray *observer;
+		
+		while ((observer = [myIterator nextObject]) != nil)
+		{
+			NSEnumerator *innerEnum = [observer objectEnumerator];
+			NSString *keypath;
+			while ((keypath = [innerEnum nextObject]) != nil) {
+				[observer unbind:keypath];
+			}
+		}
+
+	}
+}
+
+- (void)dealloc {
+	if (_retainedBoundObject) {
+		[_boundObject release];
+	}
+	
+	CFI_SAFERELEASE(_observers);
+	_observers = nil;
+	
+	CFI_SAFEDEALLOC;
+}
+
+
+@end
+
+#endif
 
 @implementation CFIViewController
 
@@ -40,6 +103,10 @@
 	
 	_nibName = [nibName copy];
 	_nibBundle = CFI_SAFERETAIN(nibBundleOrNil);
+
+#ifdef CFI_USE_AUTO_UNBINDER
+	_autounbinder = [[CFIAutoUnbinder alloc]initWithBindingTarget:self];
+#endif
 	
 	return self;
 }
@@ -51,6 +118,10 @@
 	_title = CFI_SAFERETAIN([aDecoder decodeObjectForKey:@"CFITitle"]);
 	self->view = CFI_SAFERETAIN([aDecoder decodeObjectForKey:@"CFINSView"]);
 	_nibBundle = CFI_SAFERETAIN([aDecoder decodeObjectForKey:@"CFINibBundleIdentifier"]);
+	
+#ifdef CFI_USE_AUTO_UNBINDER
+	_autounbinder = [[CFIAutoUnbinder alloc]initWithBindingTarget:self];
+#endif
 	
 	return self;
 }
@@ -66,6 +137,21 @@
 	CFI_SAFEDEALLOC;
 }
 
+#ifdef CFI_USE_AUTO_UNBINDER
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
+	
+	[_autounbinder addBinding:keyPath fromObject:observer];
+
+	[super addObserver:observer forKeyPath:keyPath options:options context:context];
+}
+
+- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath {
+
+	[_autounbinder removeBinding:keyPath fromObject:observer];
+	
+	[super removeObserver:observer forKeyPath:keyPath];
+}
+#endif
 
 
 - (void)setView:(NSView *)newView {
@@ -180,6 +266,19 @@
 - (NSString*)title {
 	return CFI_SAFEATOMICRETVAL(_title);
 }
+
+#ifdef CFI_USE_AUTO_UNBINDER
+- (oneway void)release {
+	NSInteger retCount = self.retainCount;
+	if (retCount == 1) {
+		[_autounbinder unbind];
+		[_autounbinder release];
+	}
+	
+	[super release];
+}
+
+#endif
 
 @end
 
