@@ -24,70 +24,6 @@
 #define CFI_SAFEATOMICRETVAL(x) [[x retain]autorelease]
 #endif
 
-#ifdef CFI_USE_AUTO_UNBINDER
-
-@implementation CFIAutoUnbinder
-
-- (id)initWithBindingTarget:(NSObject*)boundObject {
-	self = [super init];
-	
-	_boundObject = boundObject;
-	
-	return self;
-}
-
-- (void)addBinding:(NSString*)keyPath fromObject:(NSObject*)observer {
-	NSMutableArray *keypaths = [_observers objectForKey:[NSNumber numberWithUnsignedInteger:observer.hash]];
-	if (!keypaths) {
-		[_observers setObject:[NSMutableArray arrayWithObject:keyPath] forKey:[NSNumber numberWithUnsignedInteger:observer.hash]];
-		return;
-	}
-	[keypaths addObject:keyPath];
-}
-
-- (void)removeBinding:(NSString*)keyPath fromObject:(NSObject*)observer {
-	NSMutableArray *keypaths = [_observers objectForKey:[NSNumber numberWithUnsignedInteger:observer.hash]];
-	if (!keypaths) return;
-	
-	[keypaths removeObject:keyPath];
-}
-
-- (void)unbind {
-	if (!_retainedBoundObject) {
-		_retainedBoundObject = YES;
-		
-		[_boundObject retain];
-		NSEnumerator* myIterator = [_observers objectEnumerator];
-		NSArray *observer;
-		
-		while ((observer = [myIterator nextObject]) != nil)
-		{
-			NSEnumerator *innerEnum = [observer objectEnumerator];
-			NSString *keypath;
-			while ((keypath = [innerEnum nextObject]) != nil) {
-				[observer unbind:keypath];
-			}
-		}
-
-	}
-}
-
-- (void)dealloc {
-	if (_retainedBoundObject) {
-		[_boundObject release];
-	}
-	
-	CFI_SAFERELEASE(_observers);
-	_observers = nil;
-	
-	CFI_SAFEDEALLOC;
-}
-
-
-@end
-
-#endif
-
 @implementation CFIViewController
 
 #pragma mark - Lifecycle
@@ -103,9 +39,9 @@
 	
 	_nibName = [nibName copy];
 	_nibBundle = CFI_SAFERETAIN(nibBundleOrNil);
-
-#ifdef CFI_USE_AUTO_UNBINDER
-	_autounbinder = [[CFIAutoUnbinder alloc]initWithBindingTarget:self];
+	
+#ifdef CFI_USE_AUTOUNBINDER
+	_autounbinder = [[NSClassFromString(@"NSAutounbinder") alloc]performSelector:@selector(initWithBindingTarget:) withObject:self];
 #endif
 	
 	return self;
@@ -119,8 +55,8 @@
 	self->view = CFI_SAFERETAIN([aDecoder decodeObjectForKey:@"CFINSView"]);
 	_nibBundle = CFI_SAFERETAIN([aDecoder decodeObjectForKey:@"CFINibBundleIdentifier"]);
 	
-#ifdef CFI_USE_AUTO_UNBINDER
-	_autounbinder = [[CFIAutoUnbinder alloc]initWithBindingTarget:self];
+#ifdef CFI_USE_AUTOUNBINDER
+	_autounbinder = [[NSClassFromString(@"NSAutounbinder") alloc]performSelector:@selector(initWithBindingTarget:) withObject:self];
 #endif
 	
 	return self;
@@ -137,26 +73,16 @@
 	CFI_SAFEDEALLOC;
 }
 
-#ifdef CFI_USE_AUTO_UNBINDER
-- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
-	
-	[_autounbinder addBinding:keyPath fromObject:observer];
-
-	[super addObserver:observer forKeyPath:keyPath options:options context:context];
-}
-
-- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath {
-
-	[_autounbinder removeBinding:keyPath fromObject:observer];
-	
-	[super removeObserver:observer forKeyPath:keyPath];
+#ifdef CFI_USE_AUTOUNBINDER
+- (id)_autounbinder {
+	return [[_autounbinder retain]autorelease];
 }
 #endif
-
 
 - (void)setView:(NSView *)newView {
 	if (self->view == newView) return;
 	
+	[self->view release];
 	self->view = [newView retain];
 }
 
@@ -186,12 +112,11 @@
 	
 	NSNib *loadedNib = [[[NSNib alloc]initWithNibNamed:self.nibName bundle:self.nibBundle]autorelease];
 	if (loadedNib == nil) {
-		[NSException raise:NSInternalInconsistencyException format:@"-[%@ %@]", NSStringFromClass(self.class), NSStringFromSelector(_cmd)];
+		[NSException raise:NSInternalInconsistencyException format:@"CFIViewController cannot instantiate nil nib names."];
 		return;
 	}
 	
-	BOOL loaded = NO;
-	
+	BOOL loaded = NO;	
 	
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_8
 	loaded = [loadedNib instantiateWithOwner:self topLevelObjects:&topLevelObjects];
@@ -267,18 +192,22 @@
 	return CFI_SAFEATOMICRETVAL(_title);
 }
 
-#ifdef CFI_USE_AUTO_UNBINDER
+/**
+ * Horrifyingly hacky implementation to get the autounbinder to work.  retainBindingTargetAndUnbind
+ * for some reason forces self->view out of an autoreleasepool,  so we have to nil it out.
+ */
+#ifdef CFI_USE_AUTOUNBINDER
 - (oneway void)release {
-	NSInteger retCount = self.retainCount;
-	if (retCount == 1) {
-		[_autounbinder unbind];
+	if (self.retainCount == 1) {
+		self->view = nil;
+		[_autounbinder performSelector:@selector(retainBindingTargetAndUnbind)];
 		[_autounbinder release];
+		_autounbinder = nil;
 	}
-	
 	[super release];
 }
-
 #endif
+
 
 @end
 
@@ -294,16 +223,6 @@
 /******************************************UNSAFE**************************************************/
 - (void)commitEditingWithDelegate:(id)delegate didCommitSelector:(SEL)didCommitSelector contextInfo:(void *)contextInfo {
 	//Literally, this is what Apple was doing to get Core Data saving to work with NSViewController:
-	
-	//	NSInvocation *invoc = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:didCommitSelector]];
-	//	[invoc setTarget:self];
-	//	[invoc setSelector:didCommitSelector];
-	//	[invoc setArgument:&delegate atIndex:2];
-	//	[invoc setArgument:&contextInfo atIndex:4];
-	//	if ([self _topEditor]) {
-	//		[invoc retain];
-	//		[[self _topEditor] commitEditingWithDelegate:delegate didCommitSelector:@selector(_editor:didCommit:withOriginalDelegateInvocation:) contextInfo:contextInfo];
-	//	}
 }
 
 - (void)objectDidBeginEditing:(id)editor {
